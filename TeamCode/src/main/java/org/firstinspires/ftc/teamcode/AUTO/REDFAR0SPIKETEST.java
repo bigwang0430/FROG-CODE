@@ -311,7 +311,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -320,7 +320,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path4 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
@@ -341,7 +341,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -350,7 +350,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path6 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
@@ -371,7 +371,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -380,7 +380,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path8 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
@@ -401,7 +401,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -410,7 +410,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path10 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
@@ -431,7 +431,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -440,7 +440,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path12 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
@@ -461,7 +461,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(17.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -470,7 +470,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         Path14 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror(),
                                 new Pose(45.000, 9.000).mirror()
                         )
                 )
