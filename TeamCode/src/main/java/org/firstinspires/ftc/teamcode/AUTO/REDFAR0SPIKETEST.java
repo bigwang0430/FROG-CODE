@@ -44,7 +44,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private boolean scheduled = false;
     private SequentialCommandGroup froggyroute;
-    public PathChain Path1, Path2,Path2half, Path3, Path4, Path5, Path6, Path7, Path8, Path9, Path10, Path11, Path12, Path13, Path14, Path15, Path3half,Path3half2,Path5half,Path5half2,Path7half,Path7half2,Path9half,Path9half2,Path11half,Path11half2,Path13half,Path13half2;
+    public PathChain Path1, Path2, Path2half, Path3halfa, Path3halfb, Path4, Path5halfa, Path5halfb, Path6, Path7halfa, Path7halfb, Path8, Path9halfa, Path9halfb, Path10, Path11halfa, Path11halfb, Path12, Path13halfa, Path13halfb, Path14, Path15, Path16;
     private enum launchMode {
         PID,
         bang
@@ -297,26 +297,20 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path3 = follower.pathBuilder()
+        Path3halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path3half = follower.pathBuilder()
+        Path3halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
@@ -333,26 +327,20 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path5 = follower.pathBuilder()
+        Path5halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path5half = follower.pathBuilder()
+        Path5halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
@@ -369,26 +357,20 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path7 = follower.pathBuilder()
+        Path7halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path7half = follower.pathBuilder()
+        Path7halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
@@ -405,26 +387,20 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path9 = follower.pathBuilder()
+        Path9halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path9half = follower.pathBuilder()
+        Path9halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
@@ -441,32 +417,25 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path11 = follower.pathBuilder()
+        Path11halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path11half = follower.pathBuilder()
+        Path11halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
-
 
         Path12 = follower.pathBuilder()
                 .addPath(
@@ -478,26 +447,20 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path13 = follower.pathBuilder()
+        Path13halfa = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(17.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
                 .build();
 
-        Path13half = follower.pathBuilder()
+        Path13halfb = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(20.000, 9.000).mirror()
-                        )
-                ) .setConstantHeadingInterpolation(Math.toRadians(0))
-                .addPath(
-                        new BezierLine(
-                                new Pose(20.000 , 9.000).mirror(),
+                                new Pose(17.000, 9.000).mirror(),
                                 new Pose(11.000, 9.000).mirror()
                         )
                 )
@@ -569,16 +532,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path3),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path3halfa),
+                                new FollowPathCommand(follower, Path3halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path3half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path4),
@@ -588,16 +546,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path5),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path5halfa),
+                                new FollowPathCommand(follower, Path5halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path5half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path6),
@@ -607,16 +560,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path7),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path7halfa),
+                                new FollowPathCommand(follower, Path7halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path7half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path8),
@@ -626,16 +574,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path9),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path9halfa),
+                                new FollowPathCommand(follower, Path9halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path9half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path10),
@@ -645,16 +588,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path11),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path11halfa),
+                                new FollowPathCommand(follower, Path11halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path11half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path12),
@@ -664,16 +602,11 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                 ),
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path13),
-                                new WaitCommand(200)
+                                new FollowPathCommand(follower, Path13halfa),
+                                new FollowPathCommand(follower, Path13halfb)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new FollowPathCommand(follower, Path13half),
-                        new intakecommand(intakeSub)
-                ),
-
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path14),
@@ -681,7 +614,7 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         ),
                         new outtakecommand(outtakeSub)
                 ),
-                new   FollowPathCommand(follower, Path15)
+                new FollowPathCommand(follower, Path15)
         );
     }
 
