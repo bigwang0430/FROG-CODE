@@ -299,7 +299,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                         new BezierCurve(
                                 new Pose(45.000, 9.000).mirror(),
                                 new Pose(41.000, 38.000).mirror(),
-                                new Pose(23.000, 36.000).mirror()
+                                new Pose(21.000, 36.000).mirror()
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(0))
 
@@ -309,7 +309,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
 
         Path5 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(23.000, 36.000).mirror(),
+                                new Pose(21.000, 36.000).mirror(),
 
                                 new Pose(45.000, 9.000).mirror()
                         )
