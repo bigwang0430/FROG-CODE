@@ -298,8 +298,9 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
         Path3 = follower.pathBuilder().addPath(
                         new BezierCurve(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(41.000, 38.000).mirror(),
-                                new Pose(21.000, 36.000).mirror()
+                                new Pose(45.000, 35.000).mirror(),
+                                new Pose(37.000, 35.600).mirror(),
+                                new Pose(21.000, 35.000).mirror()
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(0))
 
@@ -467,7 +468,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path2),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -478,7 +479,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path5),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ), //go to far zone
                         new outtakecommand(outtakeSub)
                 ),
@@ -492,7 +493,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path7),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -506,7 +507,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path9),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -520,7 +521,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path11),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -534,7 +535,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path13),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -548,7 +549,7 @@ public class REDFAR1SPIKE21 extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path15),
-                                new WaitCommand(1100)
+                                new WaitCommand(1000)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
