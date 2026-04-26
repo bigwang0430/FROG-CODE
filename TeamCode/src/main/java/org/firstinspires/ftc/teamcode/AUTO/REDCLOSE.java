@@ -141,7 +141,7 @@ public class REDCLOSE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (turretAng * 1.054)), 25, 335);
+            double set = MathFunctions.clamp((180 - (turretAng * 1.054)), 25, 335);
             turret1.set(set);
             turret2.set(set);
 
@@ -193,7 +193,7 @@ public class REDCLOSE extends CommandOpMode {
             Pose robot = new Pose(x, y);
             robotZone.setPosition(x, y);
             robotZone.setRotation(follower.getPose().getHeading());
-            Pose goal = new Pose(globals.turret.goalX, globals.turret.goalY).mirror();
+            Pose goal = new Pose(142 - globals.turret.goalX, globals.turret.goalY);
 
             Pose target = goal.minus(robot);
             Vector robotToGoal = target.getAsVector();

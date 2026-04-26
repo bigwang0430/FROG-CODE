@@ -33,8 +33,8 @@ import org.firstinspires.ftc.teamcode.GLOBALS.globals;
 import java.util.List;
 import java.util.Objects;
 
-@TeleOp (name = "Blue Ollie")
-public class BlueOllie extends OpMode {
+@TeleOp (name = "Red")
+public class Red extends OpMode {
     private final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
     private final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));
     private final PolygonZone robotZone = new PolygonZone(17, 17);
@@ -214,7 +214,7 @@ public class BlueOllie extends OpMode {
 
         if (g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5) {
             currentIntakeState = intakeState.launching;
-        } else if (g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5 || g2.getButton(GamepadKeys.Button.TRIANGLE)) {
+        } else if (g1.getButton(GamepadKeys.Button.TRIANGLE) || g2.getButton(GamepadKeys.Button.TRIANGLE)) {
             currentIntakeState = intakeState.intaking;
         } else if (g1.getButton(GamepadKeys.Button.SQUARE)) {
             currentIntakeState = intakeState.eject;
@@ -309,7 +309,7 @@ public class BlueOllie extends OpMode {
 
 
         if (robotZone.isInside(closeLaunchZone)) {
-            adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
+            adjustedGoal = new Pose(142 - globals.turret.goalX, globals.turret.goalY);
             launchPIDF.setTolerance(230);
             robotLocation = "Close Zone";
             if (dist < 55) {
@@ -323,7 +323,7 @@ public class BlueOllie extends OpMode {
                 hoodAngle = 2 * dist -50;
             }
         } else if (robotZone.isInside(farLaunchZone)) {
-            adjustedGoal = new Pose(6, 142);
+            adjustedGoal = new Pose(142-6, 142);
             launchPIDF.setTolerance(100);
             robotLocation = "Far Zone";
             if (dist < 150) {
@@ -357,7 +357,7 @@ public class BlueOllie extends OpMode {
                 List<LLResultTypes.FiducialResult> tags = result.getFiducialResults();
                 if (!tags.isEmpty()) {
                     for (LLResultTypes.FiducialResult tag : tags) {
-                        if (tag.getFiducialId() == 20) { //24 for red i think
+                        if (tag.getFiducialId() == 24) { //24 for red i think
                             tagAng = tag.getTargetXDegrees();
                             tagReady = true;
                         }
@@ -371,7 +371,6 @@ public class BlueOllie extends OpMode {
         } else if (g2.getButton(GamepadKeys.Button.LEFT_BUMPER) && !prevTriggerL) {
             offset += 3;
         }
-
         if (g2.getButton(GamepadKeys.Button.OPTIONS)) {
             offset = 0;
         }
@@ -419,7 +418,7 @@ public class BlueOllie extends OpMode {
                 ;
             }
         } else {
-            double set = MathFunctions.clamp((180 + offset) * 1.14, 25, 335);
+            double set = MathFunctions.clamp((180 - offset) * 1.054, 25, 335);
             t1.set(set);
             t2.set(set);
         }
@@ -499,20 +498,20 @@ public class BlueOllie extends OpMode {
 
         if (g1.getButton(GamepadKeys.Button.DPAD_UP)) {
 
-            follower.setPose(new Pose( 8.5, 9, Math.toRadians(180)));
+            follower.setPose(new Pose(142 - 8.5, 9, Math.toRadians(0)));
         }
 
-        if (g1.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+        if (g1.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
             follower.setPose(new Pose(72, 9, Math.toRadians(90)));
 
         }
         if (g1.getButton(GamepadKeys.Button.DPAD_DOWN)) {
 
-            follower.setPose(new Pose(135, 9, Math.toRadians(0)));
+            follower.setPose(new Pose(8.5, 9, Math.toRadians(180)));
 
         }
-        if (g1.getButton(GamepadKeys.Button.DPAD_RIGHT)) {
-            follower.setPose(new Pose(15, 79, Math.toRadians(90)));
+        if (g1.getButton(GamepadKeys.Button.DPAD_LEFT)) {
+            follower.setPose(new Pose(142-15, 79, Math.toRadians(90)));
 
         }
 
@@ -528,7 +527,7 @@ public class BlueOllie extends OpMode {
             follower.setMaxPower(1);
         }
 
-        follower.setTeleOpDrive(leftY, -leftX, -g1.getRightX(), true);
+        follower.setTeleOpDrive(leftY, -leftX, 0.75 * (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)), true);
 
     }
     public void RPM() {
@@ -573,3 +572,4 @@ public class BlueOllie extends OpMode {
     }
 
 }
+

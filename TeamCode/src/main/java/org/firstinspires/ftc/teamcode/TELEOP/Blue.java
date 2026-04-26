@@ -371,6 +371,9 @@ public class Blue extends OpMode {
         } else if (g2.getButton(GamepadKeys.Button.LEFT_BUMPER) && !prevTriggerL) {
             offset += 3;
         }
+        if (g2.getButton(GamepadKeys.Button.OPTIONS)) {
+            offset = 0;
+        }
 
         prevTriggerR = g2.getButton(GamepadKeys.Button.RIGHT_BUMPER);
         prevTriggerL = g2.getButton(GamepadKeys.Button.LEFT_BUMPER);
@@ -378,7 +381,7 @@ public class Blue extends OpMode {
         if (autoAim) {
             if (turretInRange) {
                 // only go out of range if it exceeds 155
-                if (Math.abs(turretAng) > 155) {
+                if (Math.abs(turretAng) > 145) {
                     turretInRange = false;
                     turretAng = 0;
                     t1.set(180);
@@ -386,7 +389,7 @@ public class Blue extends OpMode {
                 }
             } else {
                 // only come back in range if it drops below 145
-                if (Math.abs(turretAng) <= 145) {
+                if (Math.abs(turretAng) <= 140) {
                     turretInRange = true;
                 } else {
                     t1.set(180);
@@ -395,14 +398,14 @@ public class Blue extends OpMode {
             }
 
             if (turretInRange) {
-                double set = MathFunctions.clamp((180 - (turretAng * 1.054) + offset), 25, 335);
+                double set = MathFunctions.clamp((180 - (turretAng * 1.14) + offset), 25, 335);
                 if (tagReady && !camTimerReset) {
                     camTimer = timer.seconds();
                     camTimerReset = true;
                 } else if (!tagReady) {
                     camTimerReset = false;
                 }
-                if (tagReady && Math.abs(tagAng) > 0.5 && camTimer + 0.1 < timer.seconds() && follower.getAngularVelocity() < 0.5 && follower.getVelocity().getMagnitude() < 5 && g2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
+                if (tagReady && Math.abs(tagAng) > 0.5 && g2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                     if (robotZone.isInside(farLaunchZone)) {
                         offset -= globals.turret.camP * (tagAng + globals.turret.turretOffset);
                     } else {
@@ -415,7 +418,7 @@ public class Blue extends OpMode {
                 ;
             }
         } else {
-            double set = MathFunctions.clamp((180 + offset) * 1.03, 25, 335);
+            double set = MathFunctions.clamp((180 + offset) * 1.14, 25, 335);
             t1.set(set);
             t2.set(set);
         }
@@ -495,7 +498,7 @@ public class Blue extends OpMode {
 
         if (g1.getButton(GamepadKeys.Button.DPAD_UP)) {
 
-            follower.setPose(new Pose(142 - 8.5, 9, Math.toRadians(180)));
+            follower.setPose(new Pose( 8.5, 9, Math.toRadians(180)));
         }
 
         if (g1.getButton(GamepadKeys.Button.DPAD_LEFT)) {
@@ -504,7 +507,7 @@ public class Blue extends OpMode {
         }
         if (g1.getButton(GamepadKeys.Button.DPAD_DOWN)) {
 
-            follower.setPose(new Pose(135, 9, Math.toRadians(180)));
+            follower.setPose(new Pose(135, 9, Math.toRadians(0)));
 
         }
         if (g1.getButton(GamepadKeys.Button.DPAD_RIGHT)) {

@@ -11,7 +11,7 @@ public class globals {
     public static class launcher {
 
 
-        public static float p =0.001F; //0.001
+        public static float p =0.004F; //0.001
         public static float i = 0.1F;
         public static float d = 0F;
         public static float ks = 0.067F; //0.0000216
