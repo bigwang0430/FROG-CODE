@@ -59,6 +59,8 @@ public class globals {
     @Config
     public static class auto {
         public static float farAngle = 77F;
+        public static float shootx = 43F;
+        public static float intakex = 9F;
     }
 
 
