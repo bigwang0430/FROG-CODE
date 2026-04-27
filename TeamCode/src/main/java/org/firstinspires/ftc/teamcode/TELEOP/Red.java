@@ -41,7 +41,7 @@ public class Red extends OpMode {
     private double offset;
 
     private Motor l1, l2, intake, transfer;
-    private ServoEx hood, gate, tiltl, tiltr, lights;
+    private ServoEx hood, gate, liftl, liftr, lights;
     private ServoEx t1, t2;
 
     private GamepadEx g1, g2;
@@ -65,7 +65,7 @@ public class Red extends OpMode {
     private boolean tagReady;
     private double lastTime, launchPower, RPM, previousRPM, dist, turretAng, targetRPM, hoodAngle, leftY, leftX, tagAng;
     private int lastPosition;
-    private boolean prevCross1, prevTriggerR, prevTriggerL;
+    private boolean prevCross1, prevTriggerR, prevTriggerL, prevOptions;
     private boolean autoAim = true;
     private boolean slowDrive = false;
     private boolean turretInRange;
@@ -86,10 +86,9 @@ public class Red extends OpMode {
 
     private lightcolour currentcolour = lightcolour.off;
     private lightmode  currentmode  = lightmode.solid;
-    private double camTimer;
 
     private boolean camTimerReset = false;
-    private boolean setPID;
+
 
     private enum launchMode {
         PID,
@@ -97,8 +96,19 @@ public class Red extends OpMode {
     } private launchMode currentLaunchMode = launchMode.PID;
 
     private Pose adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
+
+    public enum brakeState {
+        idle,
+        braking,
+        lift
+    } private brakeState currentBrakeState = brakeState.idle;
     @Override
     public void init() {
+        liftl = new ServoEx(hardwareMap, "liftl", 300);
+        liftl.setInverted(true);
+        liftr = new ServoEx(hardwareMap, "liftr", 300);
+        liftr.setInverted(false);
+
         timer.startTime();
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
@@ -128,8 +138,6 @@ public class Red extends OpMode {
         intake.stopAndResetEncoder();
         intake.resetEncoder();
 
-        tiltl = new ServoEx(hardwareMap, "tiltl");
-        tiltr = new ServoEx(hardwareMap, "tiltr");
         lights = new ServoEx(hardwareMap, "lights");
         lights.set(0);
 
@@ -183,6 +191,37 @@ public class Red extends OpMode {
         RPM();
         sensory();
         globals.states.autoEndPose = follower.getPose();
+        brakes();
+    }
+
+    private void brakes() {
+        if (g1.getButton(GamepadKeys.Button.SQUARE)) {
+            currentBrakeState = brakeState.braking;
+        } else if (g1.getButton(GamepadKeys.Button.OPTIONS) && !prevOptions){
+            if (currentBrakeState == brakeState.lift) {
+                currentBrakeState = brakeState.idle;
+            } else {
+                currentBrakeState = brakeState.lift;
+            }
+        }else if (currentBrakeState != brakeState.lift){
+            currentBrakeState = brakeState.idle;
+        }
+        prevOptions = g1.getButton(GamepadKeys.Button.OPTIONS);
+
+        switch (currentBrakeState) {
+            case lift:
+                liftr.set(globals.lift.leftLift);
+                liftr.set(globals.lift.rightLift);
+                break;
+            case braking:
+                liftr.set(globals.lift.rightBrake);
+                liftl.set(globals.lift.leftBrake);
+                break;
+            case idle:
+                liftr.set(globals.lift.rightIdle);
+                liftl.set(globals.lift.leftIdle);
+                break;
+        }
     }
     private void telemetry() {
         telemetry.addData("autoaim", autoAim);
@@ -399,12 +438,7 @@ public class Red extends OpMode {
 
             if (turretInRange) {
                 double set = MathFunctions.clamp((180 - (turretAng * 1.14) + offset), 25, 335);
-                if (tagReady && !camTimerReset) {
-                    camTimer = timer.seconds();
-                    camTimerReset = true;
-                } else if (!tagReady) {
-                    camTimerReset = false;
-                }
+
                 if (tagReady && Math.abs(tagAng) > 0.5 && g2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                     if (robotZone.isInside(farLaunchZone)) {
                         offset -= globals.turret.camP * (tagAng + globals.turret.turretOffset);
