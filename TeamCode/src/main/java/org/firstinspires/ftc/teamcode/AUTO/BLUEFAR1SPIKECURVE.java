@@ -9,6 +9,7 @@ import com.pedropathing.math.Vector;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
@@ -28,7 +29,7 @@ import com.skeletonarmy.marrow.zones.PolygonZone;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.GLOBALS.globals;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-
+@Disabled
 @Autonomous
 public class BLUEFAR1SPIKECURVE extends CommandOpMode {
     private Follower follower;
@@ -133,7 +134,7 @@ public class BLUEFAR1SPIKECURVE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (77 * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((180 - (77 * 1.054)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -557,5 +558,6 @@ public class BLUEFAR1SPIKECURVE extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }

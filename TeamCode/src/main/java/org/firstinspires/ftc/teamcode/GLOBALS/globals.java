@@ -56,6 +56,10 @@ public class globals {
     public static class states{
         public static Pose autoEndPose = new Pose(60, 84, Math.PI/2);
     }
+    @Config
+    public static class auto {
+        public static float farAngle = 77F;
+    }
 
 
 }

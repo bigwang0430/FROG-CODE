@@ -143,7 +143,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (79.5 * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((180 + (globals.auto.farAngle * 1.054)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -566,5 +566,6 @@ public class REDFAR0SPIKE extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }

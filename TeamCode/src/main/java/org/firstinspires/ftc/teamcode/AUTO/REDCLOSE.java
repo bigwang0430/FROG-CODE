@@ -518,5 +518,6 @@ public class REDCLOSE extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }

@@ -13,6 +13,7 @@ import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.seattlesolvers.solverslib.command.CommandBase;
@@ -37,7 +38,7 @@ import org.firstinspires.ftc.teamcode.GLOBALS.globals;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
 import java.util.List;
-
+@Disabled
 @Autonomous
 public class REDFAR0SPIKETEST extends CommandOpMode {
     private Follower follower;
@@ -638,5 +639,6 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }

@@ -544,5 +544,6 @@ public class BLUEFAR2SPIKE extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }
