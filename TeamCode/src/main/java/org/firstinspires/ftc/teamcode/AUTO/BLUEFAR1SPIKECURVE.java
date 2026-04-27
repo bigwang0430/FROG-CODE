@@ -134,7 +134,7 @@ public class BLUEFAR1SPIKECURVE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 - (77 * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((180 - (globals.auto.farAngle * 1.054)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
