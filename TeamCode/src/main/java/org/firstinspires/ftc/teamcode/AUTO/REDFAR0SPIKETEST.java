@@ -305,8 +305,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path3halfb = follower.pathBuilder()
@@ -337,8 +337,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path5halfb = follower.pathBuilder()
@@ -369,8 +369,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path7halfb = follower.pathBuilder()
@@ -401,8 +401,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path9halfb = follower.pathBuilder()
@@ -433,8 +433,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path11halfb = follower.pathBuilder()
@@ -465,8 +465,8 @@ public class REDFAR0SPIKETEST extends CommandOpMode {
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
-                .setTValueConstraint(0.75)
-                .setTimeoutConstraint(100)
+                .setTValueConstraint(0.5)
+                .setTimeoutConstraint(50)
                 .build();
 
         Path13halfb = follower.pathBuilder()
