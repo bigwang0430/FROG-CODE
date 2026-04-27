@@ -516,5 +516,6 @@ public class BLUECLOSE extends CommandOpMode {
         }
         super.run();
         follower.update();
+        globals.states.autoEndPose = follower.getPose();
     }
 }

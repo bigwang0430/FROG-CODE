@@ -6,6 +6,16 @@ import com.pedropathing.geometry.Pose;
 @Config
 public class globals {
 
+    @Config
+    public static class lift {
+        public static float rightIdle;
+        public static float rightBrake;
+        public static float rightLift;
+        public static float leftIdle;
+        public static float leftBrake;
+        public static float leftLift;
+            }
+
 
     @Config
     public static class launcher {
