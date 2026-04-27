@@ -143,7 +143,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (77 * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((180 + (79.5 * 1.054)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -208,10 +208,10 @@ public class REDFAR0SPIKE extends CommandOpMode {
             if (robotZone.isInside(farLaunchZone)) {
                 launchPIDF.setTolerance(100);
                 if (dist < 150) {
-                    targetRPM = 14.433 * dist + 2064.1;
+                    targetRPM = (14.433 * dist + 2064.1);
                     hoodAngle = 1.9704 * dist - 124.67;
                 } else {
-                    targetRPM = 14.286 * dist + 2185.7;
+                    targetRPM = (14.286 * dist + 2185.7) ;
                     hoodAngle = 0.7143 * dist + 44.286;
                 }
             } else {
@@ -220,7 +220,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                     targetRPM = 3300;
                     hoodAngle = 120;
                 } else {
-                    targetRPM = 4300;
+                    targetRPM = 4450;
                     hoodAngle = 120;
                 }
             }
@@ -281,7 +281,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 .addPath(
                         new BezierLine(
                                 new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -290,8 +290,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path2 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -300,8 +300,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path3 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -310,8 +310,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path4 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -320,8 +320,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path5 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -330,8 +330,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path6 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -340,8 +340,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path7 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -350,8 +350,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path8 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -360,8 +360,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path9 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -370,8 +370,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path10 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -380,8 +380,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path11 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -390,8 +390,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path12 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -400,8 +400,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path13 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(11.000, 9.000).mirror()
+                                new Pose(43.000, 9.000).mirror(),
+                                new Pose(9.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -410,8 +410,8 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path14 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(11.000, 9.000).mirror(),
-                                new Pose(45.000, 9.000).mirror()
+                                new Pose(9.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror()
                         )
                 )
                 .setConstantHeadingInterpolation(Math.toRadians(0))
@@ -420,7 +420,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path15 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
+                                new Pose(43.000, 9.000).mirror(),
                                 new Pose(33.000, 9.000).mirror()
                         )
                 )
@@ -473,7 +473,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path3),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -487,7 +487,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path5),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -501,7 +501,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path7),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -515,7 +515,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path9),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -529,7 +529,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path11),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -543,7 +543,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path13),
-                                new WaitCommand(300)
+                                new WaitCommand(180)
                         ),
                         new intakecommand(intakeSub)
                 ),
