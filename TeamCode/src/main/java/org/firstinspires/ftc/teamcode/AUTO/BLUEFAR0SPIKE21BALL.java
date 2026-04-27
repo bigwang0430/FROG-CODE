@@ -1,29 +1,21 @@
 package org.firstinspires.ftc.teamcode.AUTO;
 
-import com.pedropathing.control.PIDFController;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.BezierLine;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.math.MathFunctions;
 import com.pedropathing.math.Vector;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.hardware.limelightvision.LLResult;
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.seattlesolvers.solverslib.command.CommandBase;
 import com.seattlesolvers.solverslib.command.CommandOpMode;
 import com.seattlesolvers.solverslib.command.ParallelDeadlineGroup;
 import com.seattlesolvers.solverslib.command.SequentialCommandGroup;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.command.WaitCommand;
-import com.seattlesolvers.solverslib.command.WaitUntilCommand;
 import com.seattlesolvers.solverslib.controller.PIDController;
-import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
@@ -36,10 +28,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.GLOBALS.globals;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 
-import java.util.List;
-
 @Autonomous
-public class REDFAR0SPIKE extends CommandOpMode {
+public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
     private Follower follower;
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private boolean scheduled = false;
@@ -143,7 +133,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (globals.auto.farAngle * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((180 - (globals.auto.farAngle * 1.054)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -196,7 +186,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
             Pose robot = new Pose(x, y);
             robotZone.setPosition(x, y);
             robotZone.setRotation(follower.getPose().getHeading());
-            Pose goal = new Pose(6, 142).mirror();
+            Pose goal = new Pose(6, 142);
 
             Pose target = goal.minus(robot);
             Vector robotToGoal = target.getAsVector();
@@ -208,10 +198,10 @@ public class REDFAR0SPIKE extends CommandOpMode {
             if (robotZone.isInside(farLaunchZone)) {
                 launchPIDF.setTolerance(100);
                 if (dist < 150) {
-                    targetRPM = (14.433 * dist + 2064.1);
+                    targetRPM = 14.433 * dist + 2064.1;
                     hoodAngle = 1.9704 * dist - 124.67;
                 } else {
-                    targetRPM = (14.286 * dist + 2185.7) ;
+                    targetRPM = 14.286 * dist + 2185.7;
                     hoodAngle = 0.7143 * dist + 44.286;
                 }
             } else {
@@ -220,7 +210,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                     targetRPM = 3300;
                     hoodAngle = 120;
                 } else {
-                    targetRPM = 4450;
+                    targetRPM = 4300;
                     hoodAngle = 120;
                 }
             }
@@ -280,151 +270,141 @@ public class REDFAR0SPIKE extends CommandOpMode {
         Path1 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(45.000, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(45.000, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path2 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path3 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path4 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path5 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path6 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path7 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path8 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path9 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path10 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path11 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path12 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(globals.auto.shootx, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path13 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(globals.auto.intakex, 9.000).mirror()
+                                new Pose(globals.auto.shootx, 9.000),
+                                new Pose(globals.auto.intakex, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
 
         Path14 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
-                                new Pose(globals.auto.intakex, 9.000).mirror(),
-                                new Pose(globals.auto.shootx, 9.000).mirror()
+                                new Pose(globals.auto.intakex, 9.000),
+                                new Pose(33.000, 9.000)
                         )
                 )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
-                .build();
-
-        Path15 = follower.pathBuilder()
-                .addPath(
-                        new BezierLine(
-                                new Pose(globals.auto.shootx, 9.000).mirror(),
-                                new Pose(33.000, 9.000).mirror()
-                        )
-                )
-                .setConstantHeadingInterpolation(Math.toRadians(0))
+                .setConstantHeadingInterpolation(Math.toRadians(180))
                 .build();
     }
 
@@ -440,9 +420,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
 
         //SET INITIAL POSITION AFTER HARDWARE CALIBRATION
         follower = Constants.createFollower(hardwareMap);
-        follower.setStartingPose(
-                new Pose(45, 9, Math.toRadians(180)).mirror()
-        );
+        follower.setStartingPose(new Pose(45, 9, Math.toRadians(180)));//TODO
 
         IntakeSubsystem intakeSub = new IntakeSubsystem(hardwareMap);
         OuttakeSubsystem outtakeSub = new OuttakeSubsystem(hardwareMap, intakeSub);
@@ -473,7 +451,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path3),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -487,7 +465,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path5),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -501,7 +479,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path7),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -515,7 +493,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path9),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -529,7 +507,7 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path11),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
@@ -543,18 +521,11 @@ public class REDFAR0SPIKE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path13),
-                                new WaitCommand(180)
+                                new WaitCommand(300)
                         ),
                         new intakecommand(intakeSub)
                 ),
-                new ParallelDeadlineGroup(
-                        new SequentialCommandGroup(
-                                new FollowPathCommand(follower, Path14),
-                                new WaitCommand(1100)
-                        ),
-                        new outtakecommand(outtakeSub)
-                ),
-                new FollowPathCommand(follower, Path15)
+                new FollowPathCommand(follower, Path14)
         );
     }
 
