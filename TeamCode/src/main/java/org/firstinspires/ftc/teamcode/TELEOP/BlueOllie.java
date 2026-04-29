@@ -41,7 +41,7 @@ public class BlueOllie extends OpMode {
     private double offset;
 
     private Motor l1, l2, intake, transfer;
-    private ServoEx hood, gate, tiltl, tiltr, lights;
+    private ServoEx hood, gate, liftl, liftr, lights;
     private ServoEx t1, t2;
 
     private GamepadEx g1, g2;
@@ -97,8 +97,20 @@ public class BlueOllie extends OpMode {
     } private launchMode currentLaunchMode = launchMode.PID;
 
     private Pose adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
+    private boolean prevOptions;
+    private enum brakeState {
+        idle,
+        braking,
+        lift
+    } private brakeState currentBrakeState = brakeState.idle;
+
     @Override
     public void init() {
+        liftl = new ServoEx(hardwareMap, "liftl", 1);
+        liftl.setInverted(true);
+        liftr = new ServoEx(hardwareMap, "liftr", 1);
+        liftr.setInverted(false);
+        timer.startTime();
         timer.startTime();
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
@@ -128,8 +140,6 @@ public class BlueOllie extends OpMode {
         intake.stopAndResetEncoder();
         intake.resetEncoder();
 
-        tiltl = new ServoEx(hardwareMap, "tiltl");
-        tiltr = new ServoEx(hardwareMap, "tiltr");
         lights = new ServoEx(hardwareMap, "lights");
         lights.set(0);
 
@@ -183,6 +193,37 @@ public class BlueOllie extends OpMode {
         RPM();
         sensory();
         globals.states.autoEndPose = follower.getPose();
+        brakes();
+    }
+
+    private void brakes() {
+        if (g1.getButton(GamepadKeys.Button.SQUARE)) {
+            currentBrakeState = brakeState.braking;
+        } else if (g1.getButton(GamepadKeys.Button.OPTIONS) && !prevOptions){
+            if (currentBrakeState == brakeState.lift) {
+                currentBrakeState = brakeState.idle;
+            } else {
+                currentBrakeState = brakeState.lift;
+            }
+        }else if (currentBrakeState != brakeState.lift){
+            currentBrakeState = brakeState.idle;
+        }
+        prevOptions = g1.getButton(GamepadKeys.Button.OPTIONS);
+
+        switch (currentBrakeState) {
+            case lift:
+                liftl.set(globals.lift.leftLift);
+                liftr.set(globals.lift.rightLift);
+                break;
+            case braking:
+                liftr.set(globals.lift.rightBrake);
+                liftl.set(globals.lift.leftBrake);
+                break;
+            case idle:
+                liftr.set(globals.lift.rightIdle);
+                liftl.set(globals.lift.leftIdle);
+                break;
+        }
     }
     private void telemetry() {
         telemetry.addData("autoaim", autoAim);

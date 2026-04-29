@@ -97,16 +97,16 @@ public class Red extends OpMode {
 
     private Pose adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
 
-    public enum brakeState {
+    private enum brakeState {
         idle,
         braking,
         lift
     } private brakeState currentBrakeState = brakeState.idle;
     @Override
     public void init() {
-        liftl = new ServoEx(hardwareMap, "liftl", 300);
+        liftl = new ServoEx(hardwareMap, "liftl", 1);
         liftl.setInverted(true);
-        liftr = new ServoEx(hardwareMap, "liftr", 300);
+        liftr = new ServoEx(hardwareMap, "liftr", 1);
         liftr.setInverted(false);
 
         timer.startTime();
@@ -210,7 +210,7 @@ public class Red extends OpMode {
 
         switch (currentBrakeState) {
             case lift:
-                liftr.set(globals.lift.leftLift);
+                liftl.set(globals.lift.leftLift);
                 liftr.set(globals.lift.rightLift);
                 break;
             case braking:
