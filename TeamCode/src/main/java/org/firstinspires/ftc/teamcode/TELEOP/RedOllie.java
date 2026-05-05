@@ -13,6 +13,7 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -32,7 +33,7 @@ import org.firstinspires.ftc.teamcode.GLOBALS.globals;
 
 import java.util.List;
 import java.util.Objects;
-
+@Disabled
 @TeleOp (name = "Red Ollie")
 public class RedOllie extends OpMode {
     private final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
@@ -41,7 +42,7 @@ public class RedOllie extends OpMode {
     private double offset;
 
     private Motor l1, l2, intake, transfer;
-    private ServoEx hood, gate, liftl, liftr, lights;
+    private ServoEx hood, gate, lights;
     private ServoEx t1, t2;
 
     private GamepadEx g1, g2;
@@ -97,18 +98,9 @@ public class RedOllie extends OpMode {
     } private launchMode currentLaunchMode = launchMode.PID;
 
     private Pose adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
-    private enum brakeState {
-        idle,
-        braking,
-        lift
-    } private brakeState currentBrakeState = brakeState.idle;
-    private boolean prevOptions;
+
     @Override
     public void init() {
-        liftl = new ServoEx(hardwareMap, "liftl", 1);
-        liftl.setInverted(true);
-        liftr = new ServoEx(hardwareMap, "liftr", 1);
-        liftr.setInverted(false);
         timer.startTime();
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
@@ -156,14 +148,16 @@ public class RedOllie extends OpMode {
         g2 = new GamepadEx(gamepad2);
         launchPIDF.setTolerance(100);
 
-        follower = Constants.createFollower(hardwareMap);
-        follower.startTeleopDrive(true);
-        follower.setStartingPose(globals.states.autoEndPose);
 
         while (timer.seconds() < 1) {
             telemetry.addData("timer", timer.seconds());
             telemetry.update();
         }
+
+
+        follower = Constants.createFollower(hardwareMap);
+        follower.startTeleopDrive(true);
+        follower.setStartingPose(globals.states.autoEndPose);
 
         timer.reset();
         timer.startTime();
@@ -191,37 +185,9 @@ public class RedOllie extends OpMode {
         RPM();
         sensory();
         globals.states.autoEndPose = follower.getPose();
-        brakes();
-    }
-    private void brakes() {
-        if (g1.getButton(GamepadKeys.Button.SQUARE)) {
-            currentBrakeState = brakeState.braking;
-        } else if (g1.getButton(GamepadKeys.Button.OPTIONS) && !prevOptions){
-            if (currentBrakeState == brakeState.lift) {
-                currentBrakeState = brakeState.idle;
-            } else {
-                currentBrakeState = brakeState.lift;
-            }
-        }else if (currentBrakeState != brakeState.lift){
-            currentBrakeState = brakeState.idle;
-        }
-        prevOptions = g1.getButton(GamepadKeys.Button.OPTIONS);
 
-        switch (currentBrakeState) {
-            case lift:
-                liftl.set(globals.lift.leftLift);
-                liftr.set(globals.lift.rightLift);
-                break;
-            case braking:
-                liftr.set(globals.lift.rightBrake);
-                liftl.set(globals.lift.leftBrake);
-                break;
-            case idle:
-                liftr.set(globals.lift.rightIdle);
-                liftl.set(globals.lift.leftIdle);
-                break;
-        }
     }
+
     private void telemetry() {
         telemetry.addData("autoaim", autoAim);
         telemetry.addData("robotLocation", robotLocation);

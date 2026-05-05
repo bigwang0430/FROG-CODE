@@ -34,11 +34,14 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
     TelemetryData telemetryData = new TelemetryData(telemetry);
     private boolean scheduled = false;
     private SequentialCommandGroup froggyroute;
-    public PathChain Path1, Path2,Path2half, Path3, Path4, Path5, Path6, Path7, Path8, Path9, Path10, Path11, Path12, Path13, Path14, Path15, Path16;
+    public PathChain Path1, Path2, Path2half, Path3, Path4, Path5, Path6, Path7, Path8, Path9, Path10, Path11, Path12, Path13, Path14, Path15, Path16;
+
     private enum launchMode {
         PID,
         bang
-    } private launchMode currentLaunchMode = launchMode.PID;
+    }
+
+    private launchMode currentLaunchMode = launchMode.PID;
 
 
     //SUBSYSTEMS/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,8 +104,8 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
         public OuttakeSubsystem(HardwareMap hardwareMap, IntakeSubsystem intakeSub) {
             this.intakeSub = intakeSub;
 
-            turret1 = new ServoEx(hardwareMap, "t1", 360);
-            turret2 = new ServoEx(hardwareMap, "t2", 360);
+            turret1 = new ServoEx(hardwareMap, "t1", 355);
+            turret2 = new ServoEx(hardwareMap, "t2", 355);
             turret2.setInverted(true);
             turret1.setInverted(true);
 
@@ -133,7 +136,7 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 + (globals.auto.farAngle * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((177.5 + (globals.auto.farAngle * globals.turret.mult)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -151,12 +154,12 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
                     }
             }
 
-            if (launchReady){
+            if (launchReady) {
                 intakeSub.feedLauncher();
             }
         }
 
-        public void launcheroff(){
+        public void launcheroff() {
             currentLaunchMode = launchMode.PID;
             launcher2.set(0.7);
             launcher1.set(0.7);
@@ -196,16 +199,18 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
             dist = robotToGoal.getMagnitude();
 
             if (robotZone.isInside(farLaunchZone)) {
-                launchPIDF.setTolerance(100);
+                launchPIDF.setTolerance(250);
                 if (dist < 150) {
                     targetRPM = (14.433 * dist + 2064.1);
                     hoodAngle = 1.9704 * dist - 124.67;
                 } else {
-                    targetRPM = (14.286 * dist + 2185.7) ;
+                    targetRPM = (14.286 * dist + 2185.7);
                     hoodAngle = 0.7143 * dist + 44.286;
                 }
+
+                targetRPM = targetRPM * 1.005;
             } else {
-                launchPIDF.setTolerance(230);
+                launchPIDF.setTolerance(250);
                 if (follower.getPose().getY() < 56) {
                     targetRPM = 3300;
                     hoodAngle = 120;
@@ -226,47 +231,47 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
 
     //COMMANDS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static class intakecommand extends  CommandBase {
+    public static class intakecommand extends CommandBase {
         private final IntakeSubsystem intakeSubsystem;
 
-        public intakecommand(IntakeSubsystem intakeSubsystem){
+        public intakecommand(IntakeSubsystem intakeSubsystem) {
             this.intakeSubsystem = intakeSubsystem;
             addRequirements(intakeSubsystem);
         }
 
         @Override
-        public void initialize(){
+        public void initialize() {
             intakeSubsystem.startIntake();
         }
 
         @Override
-        public void end(boolean interrupted){
+        public void end(boolean interrupted) {
             intakeSubsystem.stopIntake();
         }
     }
 
-    public static class outtakecommand extends  CommandBase {
+    public static class outtakecommand extends CommandBase {
         private final OuttakeSubsystem outtakeSubsystem;
 
-        public outtakecommand(OuttakeSubsystem outtakeSubsystem){
+        public outtakecommand(OuttakeSubsystem outtakeSubsystem) {
             this.outtakeSubsystem = outtakeSubsystem;
             addRequirements(outtakeSubsystem);
         }
 
         @Override
-        public void execute(){
+        public void execute() {
             outtakeSubsystem.launch();
         }
 
         @Override
-        public void end(boolean interrupted){
+        public void end(boolean interrupted) {
             outtakeSubsystem.launcheroff();
             outtakeSubsystem.intakeSub.stopIntake();
         }
     }
 
     //PATHS//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void buildpath(){
+    public void buildpath() {
         Path1 = follower.pathBuilder()
                 .addPath(
                         new BezierLine(
@@ -532,13 +537,13 @@ public class REDFAR0SPIKE21BALL extends CommandOpMode {
     }
 
     @Override
-    public void run(){
+    public void run() {
         if (!scheduled) {
             schedule(froggyroute);
             scheduled = true;
         }
         super.run();
         follower.update();
-        globals.states.autoEndPose = follower.getPose();
+        globals.states.autoEndPose = new Pose(33, 9, Math.toRadians(180)).mirror();
     }
 }

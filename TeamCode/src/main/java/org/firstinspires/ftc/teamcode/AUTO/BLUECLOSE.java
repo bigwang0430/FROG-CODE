@@ -109,8 +109,8 @@ public class BLUECLOSE extends CommandOpMode {
         public OuttakeSubsystem(HardwareMap hardwareMap, IntakeSubsystem intakeSub) {
             this.intakeSub = intakeSub;
 
-            turret1 = new ServoEx(hardwareMap, "t1", 360);
-            turret2 = new ServoEx(hardwareMap, "t2", 360);
+            turret1 = new ServoEx(hardwareMap, "t1", 355);
+            turret2 = new ServoEx(hardwareMap, "t2", 355);
             turret2.setInverted(true);
             turret1.setInverted(true);
 
@@ -141,7 +141,7 @@ public class BLUECLOSE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 - (turretAng * 1.054)), 25, 335);
+            double set = MathFunctions.clamp((177.5 - (turretAng * globals.turret.mult)), 25, 335);
             turret1.set(set);
             turret2.set(set);
 
@@ -166,8 +166,8 @@ public class BLUECLOSE extends CommandOpMode {
 
         public void launcheroff(){
             currentLaunchMode = launchMode.PID;
-            launcher2.set(0.3);
-            launcher1.set(0.3);
+            launcher2.set(0.37);
+            launcher1.set(0.37);
         }
 
         public void RPM() {
@@ -321,7 +321,7 @@ public class BLUECLOSE extends CommandOpMode {
                         new BezierLine(
                                 new Pose(55.000, 77.000),
 
-                                new Pose(12.500, 60.000)
+                                new Pose(12.500, 59.000)
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(150))
 
@@ -329,7 +329,7 @@ public class BLUECLOSE extends CommandOpMode {
 
         Path6 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(12.500, 60.000),
+                                new Pose(12.500, 59.000),
 
                                 new Pose(55.000, 77.000)
                         )
@@ -340,7 +340,7 @@ public class BLUECLOSE extends CommandOpMode {
                         new BezierLine(
                                 new Pose(55.000, 77.000),
 
-                                new Pose(12.500, 60.000)
+                                new Pose(12.500, 59.000)
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(150))
 
@@ -348,7 +348,7 @@ public class BLUECLOSE extends CommandOpMode {
 
         Path8 = follower.pathBuilder().addPath(
                         new BezierLine(
-                                new Pose(12.500, 60.000),
+                                new Pose(12.500, 59.000),
 
                                 new Pose(55.000, 77.000)
                         )
@@ -438,7 +438,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path1),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -450,7 +450,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path4),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -464,7 +464,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path6),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -478,7 +478,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path8),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -489,7 +489,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path10),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 ),
@@ -501,7 +501,7 @@ public class BLUECLOSE extends CommandOpMode {
                 new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new FollowPathCommand(follower, Path13),
-                                new WaitCommand(700)
+                                new WaitCommand(650)
                         ),
                         new outtakecommand(outtakeSub)
                 )
@@ -516,6 +516,6 @@ public class BLUECLOSE extends CommandOpMode {
         }
         super.run();
         follower.update();
-        globals.states.autoEndPose = follower.getPose();
+        globals.states.autoEndPose = new Pose(58.000, 110.000, Math.toRadians(180));
     }
 }

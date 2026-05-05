@@ -50,8 +50,6 @@ public class Debug extends OpMode {
         intake.stopAndResetEncoder();
         intake.resetEncoder();
 
-        tiltl = new ServoEx(hardwareMap, "tiltl");
-        tiltr = new ServoEx(hardwareMap, "tiltr");
         lights = new ServoEx(hardwareMap, "lights");
         lights.set(0);
 
@@ -65,6 +63,7 @@ public class Debug extends OpMode {
         transfer.setZeroPowerBehavior(Motor.ZeroPowerBehavior.FLOAT);
 
         hood = new ServoEx(hardwareMap, "hood", 300);
+        hood.set(0);
 
         g1 = new GamepadEx(gamepad1);
         g2 = new GamepadEx(gamepad2);

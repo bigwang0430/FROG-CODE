@@ -101,8 +101,8 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
         public OuttakeSubsystem(HardwareMap hardwareMap, IntakeSubsystem intakeSub) {
             this.intakeSub = intakeSub;
 
-            turret1 = new ServoEx(hardwareMap, "t1", 360);
-            turret2 = new ServoEx(hardwareMap, "t2", 360);
+            turret1 = new ServoEx(hardwareMap, "t1", 355);
+            turret2 = new ServoEx(hardwareMap, "t2", 355);
             turret2.setInverted(true);
             turret1.setInverted(true);
 
@@ -133,7 +133,7 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 - (globals.auto.farAngle * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((177.5 - (globals.auto.farAngle * globals.turret.mult)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -196,7 +196,7 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
             dist = robotToGoal.getMagnitude();
 
             if (robotZone.isInside(farLaunchZone)) {
-                launchPIDF.setTolerance(100);
+                launchPIDF.setTolerance(250);
                 if (dist < 150) {
                     targetRPM = 14.433 * dist + 2064.1;
                     hoodAngle = 1.9704 * dist - 124.67;
@@ -204,8 +204,10 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
                     targetRPM = 14.286 * dist + 2185.7;
                     hoodAngle = 0.7143 * dist + 44.286;
                 }
+
+
             } else {
-                launchPIDF.setTolerance(230);
+                launchPIDF.setTolerance(300);
                 if (follower.getPose().getY() < 56) {
                     targetRPM = 3300;
                     hoodAngle = 120;
@@ -410,6 +412,8 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
 
     @Override
     public void initialize() {
+
+
         //PINPOINT INITIALIZATION, CALIBRATES OUR HARDWARE BEFORE RUNNING
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
@@ -537,6 +541,6 @@ public class BLUEFAR0SPIKE21BALL extends CommandOpMode {
         }
         super.run();
         follower.update();
-        globals.states.autoEndPose = follower.getPose();
+        globals.states.autoEndPose = new Pose(33, 9, Math.toRadians(180));
     }
 }

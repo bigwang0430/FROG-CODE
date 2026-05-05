@@ -37,11 +37,11 @@ import java.util.Objects;
 public class Red extends OpMode {
     private final PolygonZone closeLaunchZone = new PolygonZone(new Point(144, 144), new Point(72, 72), new Point(0, 144));
     private final PolygonZone farLaunchZone = new PolygonZone(new Point(48, 0), new Point(72, 24), new Point(96, 0));
-    private final PolygonZone robotZone = new PolygonZone(17, 17);
+    private final PolygonZone robotZone = new PolygonZone(20, 20);
     private double offset;
 
     private Motor l1, l2, intake, transfer;
-    private ServoEx hood, gate, liftl, liftr, lights;
+    private ServoEx hood, gate, lights;
     private ServoEx t1, t2;
 
     private GamepadEx g1, g2;
@@ -65,7 +65,7 @@ public class Red extends OpMode {
     private boolean tagReady;
     private double lastTime, launchPower, RPM, previousRPM, dist, turretAng, targetRPM, hoodAngle, leftY, leftX, tagAng;
     private int lastPosition;
-    private boolean prevCross1, prevTriggerR, prevTriggerL, prevOptions;
+    private boolean prevCross1, prevTriggerR, prevTriggerL;
     private boolean autoAim = true;
     private boolean slowDrive = false;
     private boolean turretInRange;
@@ -97,24 +97,15 @@ public class Red extends OpMode {
 
     private Pose adjustedGoal = new Pose(globals.turret.goalX, globals.turret.goalY);
 
-    private enum brakeState {
-        idle,
-        braking,
-        lift
-    } private brakeState currentBrakeState = brakeState.idle;
+
     @Override
     public void init() {
-        liftl = new ServoEx(hardwareMap, "liftl", 1);
-        liftl.setInverted(true);
-        liftr = new ServoEx(hardwareMap, "liftr", 1);
-        liftr.setInverted(false);
-
         timer.startTime();
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
 
-        t1 = new ServoEx(hardwareMap, "t1", 360);
-        t2 = new ServoEx(hardwareMap, "t2", 360);
+        t1 = new ServoEx(hardwareMap, "t1", 355);
+        t2 = new ServoEx(hardwareMap, "t2", 355);
         t2.setInverted(true);
         t1.setInverted(true);
 
@@ -154,16 +145,17 @@ public class Red extends OpMode {
 
         g1 = new GamepadEx(gamepad1);
         g2 = new GamepadEx(gamepad2);
-        launchPIDF.setTolerance(100);
+        launchPIDF.setTolerance(300);
 
-        follower = Constants.createFollower(hardwareMap);
-        follower.startTeleopDrive(true);
-        follower.setStartingPose(globals.states.autoEndPose);
 
         while (timer.seconds() < 1) {
             telemetry.addData("timer", timer.seconds());
             telemetry.update();
         }
+
+        follower = Constants.createFollower(hardwareMap);
+        follower.startTeleopDrive(true);
+        follower.setStartingPose(globals.states.autoEndPose);
 
         timer.reset();
         timer.startTime();
@@ -191,38 +183,9 @@ public class Red extends OpMode {
         RPM();
         sensory();
         globals.states.autoEndPose = follower.getPose();
-        brakes();
+
     }
 
-    private void brakes() {
-        if (g1.getButton(GamepadKeys.Button.SQUARE)) {
-            currentBrakeState = brakeState.braking;
-        } else if (g1.getButton(GamepadKeys.Button.OPTIONS) && !prevOptions){
-            if (currentBrakeState == brakeState.lift) {
-                currentBrakeState = brakeState.idle;
-            } else {
-                currentBrakeState = brakeState.lift;
-            }
-        }else if (currentBrakeState != brakeState.lift){
-            currentBrakeState = brakeState.idle;
-        }
-        prevOptions = g1.getButton(GamepadKeys.Button.OPTIONS);
-
-        switch (currentBrakeState) {
-            case lift:
-                liftl.set(globals.lift.leftLift);
-                liftr.set(globals.lift.rightLift);
-                break;
-            case braking:
-                liftr.set(globals.lift.rightBrake);
-                liftl.set(globals.lift.leftBrake);
-                break;
-            case idle:
-                liftr.set(globals.lift.rightIdle);
-                liftl.set(globals.lift.leftIdle);
-                break;
-        }
-    }
     private void telemetry() {
         telemetry.addData("autoaim", autoAim);
         telemetry.addData("robotLocation", robotLocation);
@@ -248,7 +211,7 @@ public class Red extends OpMode {
 
         boolean RPMDip = previousRPM - RPM > 150;
         launchPIDF.setPID(globals.launcher.p, globals.launcher.i, globals.launcher.d);
-        boolean launchReady = (launchPIDF.atSetPoint() ) && !robotLocation.equals("No Zone") && turretInRange && RPM > 500;
+        boolean launchReady = (launchPIDF.atSetPoint()) && !robotLocation.equals("No Zone") && turretInRange && RPM > 500;
 
 
         if (g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5) {
@@ -314,8 +277,13 @@ public class Red extends OpMode {
                     gate.set(globals.gate.open);
                 }
                 if (turretInRange) {
-                    transfer.set(1);
-                    intake.set(1);
+                    if (robotZone.isInside(closeLaunchZone)) {
+                        transfer.set(1);
+                        intake.set(1);
+                    } else {
+                        transfer.set(0.7);
+                        intake.set(0.7);
+                    }
                 }
                 break;
             case intaking:
@@ -337,7 +305,7 @@ public class Red extends OpMode {
         Pose robot = new Pose(x, y);
         robotZone.setPosition(x, y);
         robotZone.setRotation(follower.getPose().getHeading());
-        Pose goal = adjustedGoal;
+        Pose goal = new Pose(142-6, 142);
 
         Pose target = goal.minus(robot);
         Vector robotToGoal = target.getAsVector();
@@ -348,8 +316,7 @@ public class Red extends OpMode {
 
 
         if (robotZone.isInside(closeLaunchZone)) {
-            adjustedGoal = new Pose(142 - globals.turret.goalX, globals.turret.goalY);
-            launchPIDF.setTolerance(230);
+
             robotLocation = "Close Zone";
             if (dist < 55) {
                 targetRPM = 14 * dist + 2010;
@@ -362,8 +329,7 @@ public class Red extends OpMode {
                 hoodAngle = 2 * dist -50;
             }
         } else if (robotZone.isInside(farLaunchZone)) {
-            adjustedGoal = new Pose(142-6, 142);
-            launchPIDF.setTolerance(100);
+
             robotLocation = "Far Zone";
             if (dist < 150) {
                 targetRPM = 14.433 * dist + 2064.1;
@@ -372,10 +338,10 @@ public class Red extends OpMode {
                 targetRPM = 14.286 * dist + 2185.7;
                 hoodAngle = 0.7143 * dist + 44.286;
             }
+
         } else {
-            launchPIDF.setTolerance(230);
             robotLocation = "No Zone";
-            if (follower.getPose().getY() < 56) {
+            if (follower.getPose().getY() > 65) {
                 targetRPM = 3300;
                 hoodAngle = 120;
             } else {
@@ -406,14 +372,13 @@ public class Red extends OpMode {
         }
 
         if (g2.getButton(GamepadKeys.Button.RIGHT_BUMPER) && !prevTriggerR) {
-            offset -= 3;
+            offset -= 2;
         } else if (g2.getButton(GamepadKeys.Button.LEFT_BUMPER) && !prevTriggerL) {
-            offset += 3;
+            offset += 2;
         }
-        if (g2.getButton(GamepadKeys.Button.OPTIONS)) {
+        if (g2.getButton(GamepadKeys.Button.DPAD_UP)) {
             offset = 0;
         }
-
         prevTriggerR = g2.getButton(GamepadKeys.Button.RIGHT_BUMPER);
         prevTriggerL = g2.getButton(GamepadKeys.Button.LEFT_BUMPER);
 
@@ -437,7 +402,7 @@ public class Red extends OpMode {
             }
 
             if (turretInRange) {
-                double set = MathFunctions.clamp((180 - (turretAng * 1.14) + offset), 25, 335);
+                double set = MathFunctions.clamp((177.5 - (turretAng * globals.turret.mult) + offset), 25, 335);
 
                 if (tagReady && Math.abs(tagAng) > 0.5 && g2.getButton(GamepadKeys.Button.DPAD_DOWN)) {
                     if (robotZone.isInside(farLaunchZone)) {
@@ -452,7 +417,7 @@ public class Red extends OpMode {
                 ;
             }
         } else {
-            double set = MathFunctions.clamp((180 - offset) * 1.054, 25, 335);
+            double set = MathFunctions.clamp((180 - offset), 25, 335);
             t1.set(set);
             t2.set(set);
         }

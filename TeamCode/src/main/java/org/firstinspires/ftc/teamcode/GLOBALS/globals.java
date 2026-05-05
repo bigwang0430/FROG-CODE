@@ -8,12 +8,12 @@ public class globals {
 
     @Config
     public static class lift {
-        public static float rightIdle;
-        public static float rightBrake;
-        public static float rightLift;
-        public static float leftIdle;
-        public static float leftBrake;
-        public static float leftLift;
+        public static float rightIdle = 0.085F;
+        public static float rightBrake = 0.15F;
+        public static float rightLift = 0.22F;
+        public static float leftIdle = 0.085F;
+        public static float leftBrake = 0.15F;
+        public static float leftLift = 0.22F;
             }
 
 
@@ -21,7 +21,7 @@ public class globals {
     public static class launcher {
 
 
-        public static float p =0.005F; //0.001
+        public static float p =0.003F; //0.001
         public static float i = 0.1F;
         public static float d = 0F;
         public static float ks = 0.067F; //0.0000216
@@ -44,6 +44,7 @@ public class globals {
 
     @Config
     public static class turret {
+        public static float mult = 1.14F;
         public static float camP = 0.05F;
         public static float turretOffset = 0F;
         public static float goalY = 138F;
@@ -58,7 +59,7 @@ public class globals {
     }
     @Config
     public static class auto {
-        public static float farAngle = 77F;
+        public static float farAngle = 69F;
         public static float shootx = 43F;
         public static float intakex = 9F;
     }

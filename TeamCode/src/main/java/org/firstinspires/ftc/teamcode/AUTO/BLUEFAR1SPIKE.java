@@ -109,8 +109,8 @@ public class BLUEFAR1SPIKE extends CommandOpMode {
         public OuttakeSubsystem(HardwareMap hardwareMap, IntakeSubsystem intakeSub) {
             this.intakeSub = intakeSub;
 
-            turret1 = new ServoEx(hardwareMap, "t1", 360);
-            turret2 = new ServoEx(hardwareMap, "t2", 360);
+            turret1 = new ServoEx(hardwareMap, "t1", 355);
+            turret2 = new ServoEx(hardwareMap, "t2", 355);
             turret2.setInverted(true);
             turret1.setInverted(true);
 
@@ -141,7 +141,7 @@ public class BLUEFAR1SPIKE extends CommandOpMode {
             launchPIDF.setSetPoint(targetRPM);
             launchPower = launchPIDF.calculate(RPM);
 
-            double set = MathFunctions.clamp((180 - (globals.auto.farAngle * 1.054)), 25, 335);//253
+            double set = MathFunctions.clamp((177.5 - (globals.auto.farAngle * globals.turret.mult)), 25, 335);//253
             turret1.set(set);
             turret2.set(set);
 
@@ -410,7 +410,7 @@ public class BLUEFAR1SPIKE extends CommandOpMode {
                         new BezierLine(
                                 new Pose(globals.auto.shootx, 9.000),
 
-                                new Pose(36.000, 9.000)
+                                new Pose(33.000, 9.000)
                         )
                 ).setConstantHeadingInterpolation(Math.toRadians(180))
 
@@ -537,6 +537,6 @@ public class BLUEFAR1SPIKE extends CommandOpMode {
         }
         super.run();
         follower.update();
-        globals.states.autoEndPose = follower.getPose();
+        globals.states.autoEndPose = new Pose(33, 9, Math.toRadians(180));
     }
 }
